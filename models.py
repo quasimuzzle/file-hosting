@@ -7,6 +7,9 @@ class File(models.Model):
          uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
          uploaded_at = models.DateTimeField(auto_now_add=True)
 
+         class Meta:
+              app_label = 'files' 
+
 class Comment(models.Model):
     file = models.ForeignKey(File, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
