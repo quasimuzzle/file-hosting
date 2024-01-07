@@ -2,6 +2,9 @@ from django.shortcuts import render
 
 from django.shortcuts import render
 from .models import File, Comment, Rating
+from .forms import FileForm, CommentForm
+from django.shortcuts import get_object_or_404, redirect
+
 
 def file_list(request):
     files = File.objects.all()
@@ -48,5 +51,4 @@ def add_rating(request, file_id):
         rating_value = request.POST['rating']
         Rating.objects.create(file=file, value=rating_value)
         return redirect('file_detail', file_id=file_id)
-    
     
