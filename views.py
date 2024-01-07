@@ -1,9 +1,6 @@
-from django.shortcuts import render
-
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import File, Comment, Rating
 from .forms import FileForm, CommentForm
-from django.shortcuts import get_object_or_404, redirect
 
 
 def file_list(request):
@@ -52,3 +49,13 @@ def add_rating(request, file_id):
         Rating.objects.create(file=file, value=rating_value)
         return redirect('file_detail', file_id=file_id)
     
+
+def upload_file(request):
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = form.save()
+            return redirect('file_detail', file_id=file.pk)
+    else:
+        form = FileForm()
+    return render(request, 'files/upload_file.html', {'form': form})  
