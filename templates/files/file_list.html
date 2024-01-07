@@ -8,7 +8,7 @@
 <body>
     <h1>File List</h1>
     <ul>
-        {% for file in files %}
+        {% for file in files %} 
             <li><a href="{% url 'file_detail' file.id %}">{{ file.name }}</a></li>
         {% endfor %}
     </ul>
