@@ -3,24 +3,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>File Details</title>
+    <title>File Detail</title>
 </head>
 <body>
     <h1>{{ file.name }}</h1>
-    <p>Uploaded by: {{ file.uploaded_by }}</p>
-    <p>Uploaded at: {{ file.uploaded_at }}</p>
-    <a href="{{ file.file.url }}">Download File</a>
-
+    <p>{{ file.description }}</p>
+    
     <h2>Comments</h2>
-    {% for comment in file.comments.all %}
-        <p>{{ comment.user }}: {{ comment.text }}</p>
-    {% endfor %}
-
-    <h2>Add Comment</h2>
-    <form method="post" action="{% url 'add_comment' file.id %}">
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.text }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Rating: {{ file.average_rating }}</h2>
+    
+    <a href="{% url 'add_comment' file.id %}">Add a comment</a>
+    <form method="post" action="{% url 'add_rating' file.id %}">
         {% csrf_token %}
-        <textarea name="text"></textarea>
-        <button type="submit">Add Comment</button>
+        <select name="rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <button type="submit">Rate</button>
     </form>
 </body>
 </html> 
